@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulado ENEM - 30 Questões</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-900 text-white flex items-center justify-center min-h-screen">
+  <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-3xl w-full text-center">
+    <h1 class="text-3xl font-bold text-yellow-400 mb-6">Simulado ENEM - 30 Questões</h1>
+    <div id="quiz-container"></div>
+    <button id="next-btn" class="hidden bg-yellow-400 text-black font-bold px-6 py-3 rounded-lg mt-6 hover:bg-yellow-500 transition">Próxima questão</button>
+    <div id="result" class="mt-8 text-xl font-semibold hidden"></div>
+  </div>
+
+  <script>
+    const quizData = [
+  {
+    pergunta: "1️⃣ (FUVEST) Leia o fragmento: 'No meio do caminho tinha uma pedra / tinha uma pedra no meio do caminho'. O verso de Drummond é marcado por:",
+    opcoes: [
+      "A) Uma linguagem subjetiva e de exaltação da natureza.",
+      "B) Um tom narrativo, que descreve uma paisagem campestre.",
+      "C) A repetição como recurso de ênfase e estranhamento.",
+      "D) Um apelo emocional e religioso.",
+      "E) A presença de linguagem figurada e rimas regulares."
+    ],
+    correta: 2,
+    explicacao: "Drummond utiliza a repetição como técnica de ruptura estética e reflexão existencial. O verso enfatiza o obstáculo e a persistência humana diante das dificuldades."
+  },
+  {
+    pergunta: "2️⃣ (ENEM) A linguagem publicitária utiliza diversos recursos para persuadir o leitor. No slogan 'Viva o hoje, esqueça o ontem', o efeito de sentido principal é:",
+    opcoes: [
+      "A) Temporalidade e nostalgia.",
+      "B) Incentivo ao consumo e à valorização do presente.",
+      "C) Crítica ao comportamento moderno.",
+      "D) Sugestão de mudança social coletiva.",
+      "E) Ironia e negação do passado histórico."
+    ],
+    correta: 1,
+    explicacao: "O slogan tem como objetivo motivar o público a agir no presente, característica típica da linguagem publicitária voltada ao consumo imediato."
+  },
+  {
+    pergunta: "3️⃣ (FUVEST) O uso de pronomes de tratamento em 'Vossa Excelência' e 'Senhor' revela:",
+    opcoes: [
+      "A) Grau de intimidade entre interlocutores.",
+      "B) Formalidade e respeito hierárquico.",
+      "C) Humor e ironia.",
+      "D) Indiferença e distanciamento emocional.",
+      "E) Linguagem coloquial típica da oralidade."
+    ],
+    correta: 1,
+    explicacao: "Os pronomes de tratamento indicam formalidade e respeito, sendo usados em contextos institucionais e oficiais."
+  },
+  {
+    pergunta: "4️⃣ (ENEM) Em um anúncio, lê-se: 'Acorde para um novo sabor'. O verbo 'acorde' tem função de:",
+    opcoes: [
+      "A) Denotação informativa.",
+      "B) Comando e persuasão.",
+      "C) Desejo e incerteza.",
+      "D) Ironia e crítica.",
+      "E) Predição de futuro."
+    ],
+    correta: 1,
+    explicacao: "O verbo no imperativo ('acorde') é usado para persuadir o leitor, recurso típico da linguagem publicitária."
+  },
+  {
+    pergunta: "5️⃣ (FUVEST) O Modernismo brasileiro de 1922 se destacou, entre outros aspectos, por:",
+    opcoes: [
+      "A) Valorizar o academicismo e a norma culta.",
+      "B) Manter os padrões estéticos parnasianos.",
+      "C) Buscar uma identidade nacional através da ruptura estética.",
+      "D) Imitar as tendências literárias europeias do século XIX.",
+      "E) Rejeitar completamente o uso da linguagem coloquial."
+    ],
+    correta: 2,
+    explicacao: "Os modernistas de 22 romperam com a tradição e buscaram expressar o Brasil de forma autêntica, com linguagem livre e temas nacionais."
+  },
+  {
+    pergunta: "6️⃣ (ENEM) No texto jornalístico, o uso da linguagem objetiva e impessoal tem como finalidade:",
+    opcoes: [
+      "A) Influenciar o leitor de forma emocional.",
+      "B) Relatar fatos de forma neutra e informativa.",
+      "C) Criar suspense e expectativa.",
+      "D) Reforçar o estilo literário do autor.",
+      "E) Expressar sentimentos pessoais."
+    ],
+    correta: 1,
+    explicacao: "A linguagem jornalística prioriza a clareza e a imparcialidade, centrando-se em relatar fatos de maneira objetiva."
+  },
+  {
+    pergunta: "7️⃣ (FUVEST) A presença de neologismos na poesia concreta brasileira indica:",
+    opcoes: [
+      "A) Rejeição total da linguagem visual.",
+      "B) Valorização da musicalidade e da tradição clássica.",
+      "C) Experimentação e inovação na forma e no sentido.",
+      "D) Uso excessivo de figuras de linguagem tradicionais.",
+      "E) Retorno ao realismo descritivo."
+    ],
+    correta: 2,
+    explicacao: "A poesia concreta valoriza a experimentação linguística e visual, com invenções de palavras e disposição espacial do texto."
+  },
+  {
+    pergunta: "8️⃣ (ENEM) Em uma tirinha, o personagem diz: 'Não sou indeciso, só gosto de todas as opções'. O humor decorre de:",
+    opcoes: [
+      "A) Contradição entre o que se afirma e o que se demonstra.",
+      "B) Crítica direta à indecisão do leitor.",
+      "C) Uso de ambiguidade sintática.",
+      "D) Inversão da norma gramatical.",
+      "E) Linguagem técnica e formal."
+    ],
+    correta: 0,
+    explicacao: "O humor está na contradição: o personagem nega ser indeciso, mas demonstra exatamente esse traço em sua fala."
+  },
+  {
+    pergunta: "9️⃣ (FUVEST) A intertextualidade ocorre quando:",
+    opcoes: [
+      "A) Um texto faz referência ou diálogo com outro.",
+      "B) Há repetição de palavras no mesmo contexto.",
+      "C) O texto apresenta ambiguidade lexical.",
+      "D) O autor utiliza figuras de linguagem incomuns.",
+      "E) O texto evita qualquer influência externa."
+    ],
+    correta: 0,
+    explicacao: "A intertextualidade é a relação entre textos — direta (citação) ou indireta (influência, paródia, referência)."
+  },
+  {
+    pergunta: "🔟 (ENEM) No poema 'Canção do Exílio', de Gonçalves Dias, há predominância de:",
+    opcoes: [
+      "A) Sentimento nacionalista e saudade da terra natal.",
+      "B) Crítica social e política explícita.",
+      "C) Linguagem racionalista e objetiva.",
+      "D) Ironia e humor diante da pátria.",
+      "E) Realismo científico e descritivo."
+    ],
+    correta: 0,
+    explicacao: "O poema exalta o amor à pátria e expressa saudade do Brasil, refletindo o ideal romântico nacionalista."
+  },
+  {
+    pergunta: "11️⃣ (FUVEST) O uso de gírias e expressões informais caracteriza:",
+    opcoes: [
+      "A) A linguagem formal e normativa.",
+      "B) A linguagem coloquial, comum na oralidade.",
+      "C) O discurso científico.",
+      "D) O estilo jurídico.",
+      "E) O registro técnico."
+    ],
+    correta: 1,
+    explicacao: "As gírias e expressões informais fazem parte da linguagem coloquial, usada em situações de comunicação cotidiana."
+  },
+  {
+    pergunta: "12️⃣ (ENEM) Em textos argumentativos, o uso de conectivos como 'portanto' e 'logo' indica:",
+    opcoes: [
+      "A) Relação de consequência e conclusão.",
+      "B) Contraste e oposição de ideias.",
+      "C) Condicionalidade e hipótese.",
+      "D) Tempo e sequência de ações.",
+      "E) Enumeração de exemplos."
+    ],
+    correta: 0,
+    explicacao: "Conectivos como 'portanto' e 'logo' introduzem conclusões ou consequências lógicas do argumento."
+  },
+  {
+    pergunta: "13️⃣ (FUVEST) A função conativa da linguagem é observada quando:",
+    opcoes: [
+      "A) Há foco no emissor e na expressão pessoal.",
+      "B) O objetivo é convencer ou influenciar o receptor.",
+      "C) O texto descreve fatos objetivamente.",
+      "D) O foco recai na própria mensagem.",
+      "E) O texto busca a musicalidade das palavras."
+    ],
+    correta: 1,
+    explicacao: "A função conativa (ou apelativa) visa influenciar o comportamento do leitor ou ouvinte, comum em propagandas e discursos."
+  },
+  {
+    pergunta: "14️⃣ (ENEM) No trecho 'A vida é um sopro', temos uma figura de linguagem classificada como:",
+    opcoes: [
+      "A) Hipérbole.",
+      "B) Comparação.",
+      "C) Metáfora.",
+      "D) Metonímia.",
+      "E) Ironia."
+    ],
+    correta: 2,
+    explicacao: "A metáfora substitui um termo por outro, com base em semelhança implícita. 'A vida é um sopro' expressa brevidade de forma poética."
+  },
+  {
+    pergunta: "15️⃣ (FUVEST) Em 'Ele morreu de tanto rir', o termo destacado expressa:",
+    opcoes: [
+      "A) Causa.",
+      "B) Consequência.",
+      "C) Finalidade.",
+      "D) Comparação.",
+      "E) Oposição."
+    ],
+    correta: 0,
+    explicacao: "A preposição 'de' indica causa — 'morreu de tanto rir' significa que o riso foi o motivo da morte."
+  },
+  {
+    pergunta: "16️⃣ (ENEM) A literatura de cordel caracteriza-se por:",
+    opcoes: [
+      "A) Linguagem rebuscada e acadêmica.",
+      "B) Narração em versos rimados e temática popular.",
+      "C) Ausência de rimas e métrica.",
+      "D) Foco em temas científicos e filosóficos.",
+      "E) Rejeição da cultura nordestina."
+    ],
+    correta: 1,
+    explicacao: "O cordel é uma manifestação popular nordestina com versos rimados e linguagem acessível."
+  },
+  {
+    pergunta: "17️⃣ (FUVEST) A função poética da linguagem está presente quando:",
+    opcoes: [
+      "A) O foco é o conteúdo informativo.",
+      "B) O objetivo é instruir o leitor.",
+      "C) A ênfase recai na forma e na estética da mensagem.",
+      "D) O emissor busca persuadir o receptor.",
+      "E) O texto segue normas técnicas."
+    ],
+    correta: 2,
+    explicacao: "Na função poética, a linguagem é valorizada em sua forma, ritmo e estética, não apenas pelo conteúdo."
+  },
+  {
+    pergunta: "18️⃣ (ENEM) O gênero crônica tem como principal característica:",
+    opcoes: [
+      "A) Narrar fatos longos e complexos.",
+      "B) Relatar acontecimentos cotidianos com leveza e reflexão.",
+      "C) Descrever eventos históricos detalhados.",
+      "D) Focar em personagens heroicos e trágicos.",
+      "E) Usar linguagem técnica e impessoal."
+    ],
+    correta: 1,
+    explicacao: "A crônica combina observação do cotidiano com reflexão e humor, usando linguagem simples e direta."
+  },
+  {
+    pergunta: "19️⃣ (FUVEST) Em 'Vi o menino chorar de alegria', a expressão 'de alegria' exerce a função de:",
+    opcoes: [
+      "A) Objeto direto.",
+      "B) Objeto indireto.",
+      "C) Adjunto adverbial de causa.",
+      "D) Predicativo do sujeito.",
+      "E) Adjunto adnominal."
+    ],
+    correta: 2,
+    explicacao: "O termo 'de alegria' indica a causa do choro — portanto, é um adjunto adverbial de causa."
+  },
+  {
+    pergunta: "20️⃣ (ENEM) A variação linguística no Brasil está relacionada principalmente a:",
+    opcoes: [
+      "A) Diferenças de escolaridade, região e contexto social.",
+      "B) Falta de domínio das regras gramaticais.",
+      "C) Erros de fala e escrita.",
+      "D) Uso de gírias estrangeiras.",
+      "E) Uniformidade cultural."
+    ],
+    correta: 0,
+    explicacao: "A língua varia conforme fatores regionais, sociais e situacionais — e isso é parte natural da diversidade linguística."
+  },
+];
+
+    const quizContainer = document.getElementById("quiz-container");
+    const nextBtn = document.getElementById("next-btn");
+    const resultDiv = document.getElementById("result");
+
+    let perguntaAtual = 0;
+    let respostasUsuario = new Array(quizData.length).fill(null);
+
+    function carregarPergunta() {
+      const q = quizData[perguntaAtual];
+      quizContainer.innerHTML = `
+        <h2 class="text-xl font-semibold mb-6">${q.pergunta}</h2>
+        <div class="space-y-3">
+          ${q.opcoes.map((op, i) => `
+            <button class="w-full bg-gray-700 py-3 rounded-lg transition opcao ${respostasUsuario[perguntaAtual] === i ? 'bg-yellow-500 text-black' : 'hover:bg-gray-600'}" data-index="${i}">
+              ${op}
+            </button>
+          `).join('')}
+        </div>
+      `;
+      nextBtn.classList.remove("hidden");
+      document.querySelectorAll(".opcao").forEach(btn => {
+        btn.addEventListener("click", selecionarOpcao);
+      });
+    }
+
+    function selecionarOpcao(e) {
+      const index = parseInt(e.target.dataset.index);
+      respostasUsuario[perguntaAtual] = index;
+      const botoes = document.querySelectorAll(".opcao");
+      botoes.forEach(btn => btn.classList.remove("bg-yellow-500", "text-black"));
+      e.target.classList.add("bg-yellow-500", "text-black");
+    }
+
+    nextBtn.addEventListener("click", () => {
+      if (perguntaAtual < quizData.length - 1) {
+        perguntaAtual++;
+        carregarPergunta();
+      } else {
+        mostrarResultado();
+      }
+    });
+
+    function mostrarResultado() {
+      let acertos = 0;
+      let errosDetalhados = [];
+
+      quizData.forEach((q, i) => {
+        if (respostasUsuario[i] === q.correta) {
+          acertos++;
+        } else {
+          errosDetalhados.push({
+            pergunta: q.pergunta,
+            correta: q.opcoes[q.correta],
+            explicacao: q.explicacao
+          });
+        }
+      });
+
+      quizContainer.innerHTML = "";
+      nextBtn.classList.add("hidden");
+      resultDiv.classList.remove("hidden");
+
+      let htmlResultado = `
+        ✅ Você acertou <span class="text-green-400">${acertos}</span> de 
+        <span class="text-yellow-400">${quizData.length}</span> questões.
+      `;
+
+      if (errosDetalhados.length > 0) {
+        htmlResultado += `<div class="mt-6 text-left">
+          <h3 class="text-red-400 font-bold text-lg mb-2">❌ Questões incorretas:</h3>
+          <ul class="space-y-3">`;
+
+        errosDetalhados.forEach(erro => {
+          htmlResultado += `
+            <li class="bg-gray-700 p-3 rounded-lg">
+              <strong>${erro.pergunta}</strong><br>
+              ✅ Resposta correta: <span class="text-green-400">${erro.correta}</span><br>
+              💡 Explicação: ${erro.explicacao}
+            </li>
+          `;
+        });
+
+        htmlResultado += `</ul></div>`;
+      }
+
+      htmlResultado += `
+        <button onclick="reiniciar()" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-500 mt-8">
+          Tentar novamente
+        </button>
+      `;
+
+      resultDiv.innerHTML = htmlResultado;
+    }
+
+    function reiniciar() {
+      perguntaAtual = 0;
+      respostasUsuario = new Array(quizData.length).fill(null);
+      resultDiv.classList.add("hidden");
+      carregarPergunta();
+    }
+
+    carregarPergunta();
+  </script>
+</body>
+</html>
