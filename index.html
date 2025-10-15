@@ -842,7 +842,7 @@
       "E) 200 J"
     ],
     correta: 2,
-    explicacao: "A energia potencial é E = mgh = 0,5 × 10 × 2 = 10 J? Atenção: massa deve estar em kg (0,5 kg). Assim, E = 0,5 × 10 × 2 = 10 J. Portanto, a alternativa correta é C) 10 J. (corrigindo: 10 J)"
+    explicacao: "A energia potencial é E = mgh = 0,5 × 10 × 2 = 10 J. Atenção: massa deve estar em kg (0,5 kg)."
   },
   {
     pergunta: "70️⃣ Durante a Segunda Guerra Mundial, o desenvolvimento de novas tecnologias e o esforço industrial em larga escala transformaram profundamente a economia global. Além das consequências bélicas, esse período também impulsionou:",
@@ -980,6 +980,7 @@
 
     const quizContainer = document.getElementById("quiz-container");
     const nextBtn = document.getElementById("next-btn");
+    const prevBtn = document.getElementById("prev-btn");
     const resultDiv = document.getElementById("result");
 
     let perguntaAtual = 0;
@@ -991,24 +992,30 @@
         <h2 class="text-xl font-semibold mb-6">${q.pergunta}</h2>
         <div class="space-y-3">
           ${q.opcoes.map((op, i) => `
-            <button class="w-full bg-gray-700 py-3 rounded-lg transition opcao ${respostasUsuario[perguntaAtual] === i ? 'bg-yellow-500 text-black' : 'hover:bg-gray-600'}" data-index="${i}">
+            <button class="w-full bg-gray-700 py-3 rounded-lg transition opcao ${
+              respostasUsuario[perguntaAtual] === i
+                ? 'bg-yellow-500 text-black'
+                : 'hover:bg-gray-600'
+            }" data-index="${i}">
               ${op}
             </button>
           `).join('')}
         </div>
       `;
-      nextBtn.classList.remove("hidden");
+
       document.querySelectorAll(".opcao").forEach(btn => {
         btn.addEventListener("click", selecionarOpcao);
       });
+
+      prevBtn.classList.toggle("hidden", perguntaAtual === 0);
+      nextBtn.innerText =
+        perguntaAtual === quizData.length - 1 ? "Finalizar" : "Próxima →";
     }
 
     function selecionarOpcao(e) {
       const index = parseInt(e.target.dataset.index);
       respostasUsuario[perguntaAtual] = index;
-      const botoes = document.querySelectorAll(".opcao");
-      botoes.forEach(btn => btn.classList.remove("bg-yellow-500", "text-black"));
-      e.target.classList.add("bg-yellow-500", "text-black");
+      carregarPergunta(); // re-renderiza para manter marcação
     }
 
     nextBtn.addEventListener("click", () => {
@@ -1017,6 +1024,13 @@
         carregarPergunta();
       } else {
         mostrarResultado();
+      }
+    });
+
+    prevBtn.addEventListener("click", () => {
+      if (perguntaAtual > 0) {
+        perguntaAtual--;
+        carregarPergunta();
       }
     });
 
@@ -1038,6 +1052,7 @@
 
       quizContainer.innerHTML = "";
       nextBtn.classList.add("hidden");
+      prevBtn.classList.add("hidden");
       resultDiv.classList.remove("hidden");
 
       let htmlResultado = `
@@ -1065,7 +1080,7 @@
 
       htmlResultado += `
         <button onclick="reiniciar()" class="bg-yellow-400 text-black px-6 py-3 rounded-lg font-bold hover:bg-yellow-500 mt-8">
-          Tentar novamente
+          Refazer simulado
         </button>
       `;
 
@@ -1076,14 +1091,15 @@
       perguntaAtual = 0;
       respostasUsuario = new Array(quizData.length).fill(null);
       resultDiv.classList.add("hidden");
+      nextBtn.classList.remove("hidden");
       carregarPergunta();
     }
 
     carregarPergunta();
   </script>
 </body>
-
 </html>
+
 
 
 
