@@ -10,7 +10,17 @@
   <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl max-w-3xl w-full text-center">
     <h1 class="text-3xl font-bold text-yellow-400 mb-6">Simulado ENEM - Bons estudos!</h1>
     <div id="quiz-container"></div>
-    <button id="next-btn" class="hidden bg-yellow-400 text-black font-bold px-6 py-3 rounded-lg mt-6 hover:bg-yellow-500 transition">Próxima questão</button>
+
+    <!-- 🔹 Botões de navegação -->
+    <div class="flex justify-between mt-6">
+      <button id="prev-btn" class="hidden bg-gray-600 text-white font-bold px-6 py-3 rounded-lg hover:bg-gray-700 transition">
+        ← Voltar
+      </button>
+      <button id="next-btn" class="bg-yellow-400 text-black font-bold px-6 py-3 rounded-lg hover:bg-yellow-500 transition">
+        Próxima →
+      </button>
+    </div>
+
     <div id="result" class="mt-8 text-xl font-semibold hidden"></div>
   </div>
 
@@ -1099,6 +1109,7 @@
   </script>
 </body>
 </html>
+
 
 
 
